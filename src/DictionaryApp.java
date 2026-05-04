@@ -12,21 +12,25 @@ public class DictionaryApp {
         System.out.print("Ваш выбор: ");
         String choice = scanner.nextLine();
 
-        if (choice.equals("1")) {
+        if ("1".equals(choice)) {
             dictionary = new FourLetterDictionary();
             fileName = "dictionary_4letters.txt";
-        } else if (choice.equals("2")) {
+        } else if ("2".equals(choice)) {
             dictionary = new FiveDigitDictionary();
             fileName = "dictionary_5digits.txt";
         } else {
             System.out.println("Неверный выбор.");
+            scanner.close();
             return;
         }
 
+        // Исправлено: ловим Exception, как объявлено в интерфейсе
         try {
             dictionary.loadFromFile(fileName);
         } catch (Exception e) {
-            System.out.println("Ошибка загрузки файла: " + e.getMessage());
+            System.err.println("Ошибка загрузки файла: " + e.getMessage());
+            scanner.close();
+            return;
         }
 
         while (true) {
@@ -75,9 +79,10 @@ public class DictionaryApp {
                         return;
                     default:
                         System.out.println("Неверная команда.");
+                        break;
                 }
             } catch (Exception e) {
-                System.out.println("Произошла ошибка: " + e.getMessage());
+                System.err.println("Произошла ошибка: " + e.getMessage());
             }
         }
     }
