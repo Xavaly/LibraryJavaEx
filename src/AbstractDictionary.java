@@ -12,6 +12,10 @@ public abstract class AbstractDictionary implements Dictionary {
             System.out.println("Ошибка: Некорректные данные для добавления.");
             return false;
         }
+        if (data.containsKey(key)) {
+            System.out.println("Ошибка: Ключ \"" + key + "\" уже существует в словаре.");
+            return false;
+        }
         data.put(key, value);
         return true;
     }
